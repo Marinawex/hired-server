@@ -7,6 +7,6 @@ const app = express();
 app.use(cors());
 app.use(BodyParser.json());
 
-app.use('/', router);
+app.use('/api/v1/companies', router);
 
 export default app;
