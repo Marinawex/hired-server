@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-interface IStatus {
+export  interface IStatus {
   inProcess: boolean;
   applied: boolean;
   followUp: boolean;
@@ -8,13 +8,13 @@ interface IStatus {
   rejected: boolean;
 }
 
-interface IContactInfo {
+export interface IContactInfo {
   ContactName: string;
   ContactEmail: string;
   ContactPhoneNumber: string; // Todo : check how to valueAsNumber works
 }
 
-interface ICompany {
+export interface ICompany {
   companyName: string;
   position: string;
   applicationDate: string;

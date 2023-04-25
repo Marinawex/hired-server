@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { CompaniesService } from '../services/companiesService';
 // import { companies } from '../models/companies';
 import { Company } from '../models/companiesModel';
+import { validateCompany } from './companiesValidator';
 
 export class CompaniesController {
   private companiesServise = new CompaniesService();
@@ -81,10 +82,11 @@ export class CompaniesController {
       noReply: false,
       rejected: false,
     };
+    
     try {
-      const newCompany = await Company.create({ status, ...req.body });
+      const validCompany = validateCompany(req.body)
+      const newCompany = await Company.create({ status, ...validCompany });
       console.log(req.body);
-      
 
       res.status(201).json({
         status: 'success',

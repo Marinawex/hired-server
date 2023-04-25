@@ -8,5 +8,6 @@ app.use(cors());
 app.use(BodyParser.json());
 
 app.use('/api/v1/companies', router);
+app.use('/api/v1/users', router);
 
 export default app;
