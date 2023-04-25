@@ -25,7 +25,7 @@ export const companies = [
   },
   {
     id: 3,
-    name: 'Netflix',
+    name: 'Hello Heart',
     applicationDate: '2023-03-05',
     status: {
       inProcess: true,
@@ -251,6 +251,281 @@ export const companies = [
       noReply: false,
       rejected: false,
     },
+  },
+];
+
+export const newCompanies = companies.map((company) => {
+  return {
+    ...company,
+    companyName: company.name,
+    position: 'front end developer',
+  };
+});
+
+newCompanies.forEach((company) => {
+  delete company.name;
+  delete company.id;
+});
+
+// console.log(newCompanies);
+
+// for (const comp of newCompanies){
+//   console.log(comp.name);
+
+// }
+
+export const refactoredCompanies = [
+  {
+    applicationDate: '2023-03-18',
+    status: {
+      inProcess: false,
+      applied: false,
+      followUp: true,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Facebook',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-15',
+    status: {
+      inProcess: false,
+      applied: false,
+      followUp: false,
+      noReply: true,
+      rejected: false,
+    },
+    companyName: 'Tesla',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-05',
+    status: {
+      inProcess: true,
+      applied: false,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Netflix',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-01',
+    status: {
+      inProcess: false,
+      applied: true,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'IBM',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-02-28',
+    status: {
+      inProcess: true,
+      applied: false,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Twitter',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-12',
+    status: {
+      inProcess: false,
+      applied: true,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Salesforce',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-02-12',
+    status: {
+      inProcess: false,
+      applied: false,
+      followUp: false,
+      noReply: false,
+      rejected: true,
+    },
+    companyName: 'Intel',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-18',
+    status: {
+      inProcess: false,
+      applied: false,
+      followUp: false,
+      noReply: true,
+      rejected: false,
+    },
+    companyName: 'Uber',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-14',
+    status: {
+      inProcess: true,
+      applied: false,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Airbnb',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-05',
+    status: {
+      inProcess: false,
+      applied: true,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Snapchat',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-11',
+    status: {
+      inProcess: false,
+      applied: false,
+      followUp: true,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Dropbox',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-17',
+    status: {
+      inProcess: false,
+      applied: false,
+      followUp: false,
+      noReply: true,
+      rejected: false,
+    },
+    companyName: 'Zoom',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-07',
+    status: {
+      inProcess: true,
+      applied: false,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Square',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-25',
+    status: {
+      inProcess: false,
+      applied: false,
+      followUp: false,
+      noReply: false,
+      rejected: true,
+    },
+    companyName: 'PayPal',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-26',
+    status: {
+      inProcess: true,
+      applied: false,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Github',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-10',
+    status: {
+      inProcess: false,
+      applied: true,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Reddit',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-05',
+    status: {
+      inProcess: false,
+      applied: true,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'OpenAI',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-02',
+    status: {
+      inProcess: true,
+      applied: false,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Google',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-19',
+    status: {
+      inProcess: false,
+      applied: true,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Apple',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-17',
+    status: {
+      inProcess: false,
+      applied: false,
+      followUp: true,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Microsoft',
+    position: 'front end developer',
+  },
+  {
+    applicationDate: '2023-03-07',
+    status: {
+      inProcess: false,
+      applied: true,
+      followUp: false,
+      noReply: false,
+      rejected: false,
+    },
+    companyName: 'Amazon',
+    position: 'front end developer',
   },
 ];
 

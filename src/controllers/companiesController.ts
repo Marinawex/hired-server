@@ -83,6 +83,8 @@ export class CompaniesController {
     };
     try {
       const newCompany = await Company.create({ status, ...req.body });
+      console.log(req.body);
+      
 
       res.status(201).json({
         status: 'success',
