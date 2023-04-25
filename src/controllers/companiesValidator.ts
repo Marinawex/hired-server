@@ -1,5 +1,5 @@
 import { ICompany } from 'models/companiesModel';
-import validator from 'validator'
+import validator from 'validator';
 
 export const validateCompany = (payload: ICompany): ICompany => {
   if (!payload) {
@@ -8,17 +8,17 @@ export const validateCompany = (payload: ICompany): ICompany => {
 
   const { companyName, position, applicationDate, contactInfo } = payload;
 
-  validator.escape(companyName).trim()
-  validator.escape(position).trim()
-  validator.escape(contactInfo.ContactEmail).trim()
-  validator.escape(contactInfo.ContactName).trim()
-  validator.escape(contactInfo.ContactPhoneNumber).trim()
+  validator.escape(companyName).trim();
+  validator.escape(position).trim();
+  validator.escape(contactInfo.ContactEmail).trim();
+  validator.escape(contactInfo.ContactName).trim();
+  validator.escape(contactInfo.ContactPhoneNumber).trim();
 
   if (!validator.isLength(companyName, { min: 2, max: 40 })) {
     throw new Error('company name must be 2 to 40 chars length');
   }
 
-  if (validator.isAlphanumeric(companyName) ) {
+  if (validator.isAlphanumeric(companyName)) {
     throw new Error('company name must be a valid name');
   }
 
@@ -30,12 +30,12 @@ export const validateCompany = (payload: ICompany): ICompany => {
     throw new Error('position must be 2 to 40 chars length');
   }
 
-  if (!validator.isTime(applicationDate)){
+  if (!validator.isTime(applicationDate)) {
     throw new Error('applicationDate must be a valid date');
   }
 
-  if(!validator.isEmail(contactInfo.ContactEmail)){
-      throw new Error('invalid email')
+  if (!validator.isEmail(contactInfo.ContactEmail)) {
+    throw new Error('invalid email');
   }
 
   return payload as ICompany;

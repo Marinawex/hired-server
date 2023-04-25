@@ -5,7 +5,7 @@ import { Company } from '../models/companiesModel';
 import { validateCompany } from './companiesValidator';
 
 export class CompaniesController {
-  private companiesServise = new CompaniesService();
+  private companiesService = new CompaniesService();
 
   constructor() {}
 
@@ -82,9 +82,9 @@ export class CompaniesController {
       noReply: false,
       rejected: false,
     };
-    
+
     try {
-      const validCompany = validateCompany(req.body)
+      const validCompany = validateCompany(req.body);
       const newCompany = await Company.create({ status, ...validCompany });
       console.log(req.body);
 
