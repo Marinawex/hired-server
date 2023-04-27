@@ -1,31 +1,30 @@
-import { Request, Response, NextFunction } from 'express';
-import { CompaniesService } from '../services/companiesService';
+import { Request, Response } from 'express';
+import { PositionsService } from '../services/positionsService';
 // import { companies } from '../models/companies';
-import { Position } from '../models/positionsModel';
-import { validatePosition } from './companiesValidator';
+import { PositionModel } from '../models/positionsModel';
+import { validatePosition } from './positionsValidator';
 
-export class CompaniesController {
-  companiesService = new CompaniesService();
+export class PositionsController {
+  positionsService = new PositionsService();
 
   constructor() {}
 
-  async getAllCompanies(req: Request, res: Response) {
+  async getAllPositions(req: Request, res: Response) {
     try {
       //build query
       //1)filtering
-      
-      const queryObj = { ...req.query };
-      const excludedFields = ['page', 'sort', 'limit', 'fields'];
-      excludedFields.forEach((field) => delete queryObj[field]);
-      console.log(req.query, queryObj);
 
-      //2) advenced filtering
+      const queryObj = { ...req.query };
+      // const excludedFields = ['page', 'sort', 'limit', 'fields'];
+      // excludedFields.forEach((field) => delete queryObj[field]);
+      // console.log(req.query, queryObj);
+
+      // //2) advenced filtering
       let queryStr = JSON.stringify(queryObj);
-      queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-      let query = Position.find(JSON.parse(queryStr));
+      // queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+      let query = PositionModel.find(JSON.parse(queryStr));
 
       // console.log(query);
-      
 
       // in the query string this will lock like  ?duration[gte]=5
 
@@ -43,29 +42,27 @@ export class CompaniesController {
       // const companies = await Company.find().where('applicationDate').equals('2023-03-07') ----- query example
 
       //exequte query
-      const companies = await query;
+      const positions = await query;
 
       // console.log(companies);
-      
 
       // //  i want to refactor this function call place and dind here better place and implementation
-     const companiesWithDaysCounter =  companies.map((company) => {
+      const positionsWithDaysCounter = positions.map((position) => {
         return {
-          ...company,
+          ...position,
           //  find the way to make it work with companiesServise!!!
-        daysPassedSinceApplication:  7
+          daysPassedSinceApplication: 7,
         };
+      });
 
-      }) 
-
-      console.log(companiesWithDaysCounter);
+      console.log(positionsWithDaysCounter);
 
       //send response
       res.status(200).json({
         status: 'success',
-        results: companiesWithDaysCounter.length,
+        results: positionsWithDaysCounter.length,
         data: {
-          companies:companiesWithDaysCounter,
+          positions: positionsWithDaysCounter,
         },
       });
     } catch (err) {
@@ -76,19 +73,18 @@ export class CompaniesController {
     }
   }
 
-  async getAllCompaniesByStatus(req: Request, res: Response) {
-    let statusaName = req.query
-    const companies = Position.find({})
-
+  async getAllPositionsByStatus(req: Request, res: Response) {
+    let statusaName = req.query;
+    const positions = PositionModel.find({});
   }
 
-  async getCompany(req: Request, res: Response) {
+  async getPosition(req: Request, res: Response) {
     try {
-      const company = await Position.findById(req.params.id);
+      const position = await PositionModel.findById(req.params.id);
       res.status(200).json({
         status: 'success',
         data: {
-          company,
+          position,
         },
       });
     } catch (err) {
@@ -99,18 +95,20 @@ export class CompaniesController {
     }
   }
 
-  async createCompany(req: Request, res: Response) {
-    const status = 'applied'
+  async createPosition(req: Request, res: Response) {
+    // const status = 'applied'
 
     try {
-      const validCompany = validatePosition(req.body);
-      const newCompany = await Position.create({ status, ...validCompany });
+      const validPosition = validatePosition(req.body);
+      // the status is added automatically by the DB
+      // const newPosition = await PositionModel.create({ status, ...validPosition });
+      const newPosition = await PositionModel.create(validPosition);
       console.log(req.body);
 
       res.status(201).json({
         status: 'success',
         data: {
-          comapany: newCompany,
+          position: newPosition,
         },
       });
     } catch (err) {
@@ -121,13 +119,13 @@ export class CompaniesController {
     }
   }
 
-  async updateCompany(req: Request, res: Response) {
+  async updatePosition(req: Request, res: Response) {
     try {
-      const company = await Position.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+      const position = await PositionModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
       res.status(200).json({
         status: 'success',
         data: {
-          company,
+          position,
         },
       });
     } catch (err) {
@@ -138,9 +136,9 @@ export class CompaniesController {
     }
   }
 
-  async deleteCompany(req: Request, res: Response) {
+  async deletePosition(req: Request, res: Response) {
     try {
-      await Position.findByIdAndDelete(req.params.id);
+      await PositionModel.findByIdAndDelete(req.params.id);
       res.status(204).json({
         status: 'success',
         data: null,

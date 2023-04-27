@@ -1,32 +1,32 @@
-import { IPosition } from 'models/positionsModel';
+import { Position } from 'models/positionsModel';
 import validator from 'validator';
 
-export const validatePosition = (payload: IPosition): IPosition => {
+export const validatePosition = (payload: Position): Position => {
   if (!payload) {
     throw new Error('the value is empty');
   }
 
-  const { companyName, positionTitle, applicationDate, contactInfo } = payload;
+  const { company, title, applicationDate, contact } = payload;
 
-  validator.escape(companyName).trim();
-  validator.escape(positionTitle).trim();
-  validator.escape(contactInfo.ContactEmail).trim();
-  validator.escape(contactInfo.ContactName).trim();
-  validator.escape(contactInfo.ContactPhoneNumber).trim();
+  validator.escape(company.name).trim();
+  validator.escape(title).trim();
+  validator.escape(contact.email).trim();
+  validator.escape(contact.name).trim();
+  validator.escape(contact.phoneNumber).trim();
 
-  if (!validator.isLength(companyName, { min: 2, max: 40 })) {
+  if (!validator.isLength(company.name, { min: 2, max: 40 })) {
     throw new Error('company name must be 2 to 40 chars length');
   }
 
-  if (validator.isAlphanumeric(companyName)) {
+  if (validator.isAlphanumeric(company.name)) {
     throw new Error('company name must be a valid name');
   }
 
-  if (!validator.isAlpha(positionTitle)) {
+  if (!validator.isAlpha(title)) {
     throw new Error('invalid position');
   }
 
-  if (!validator.isLength(positionTitle, { min: 2, max: 40 })) {
+  if (!validator.isLength(title, { min: 2, max: 40 })) {
     throw new Error('position must be 2 to 40 chars length');
   }
 
@@ -34,11 +34,11 @@ export const validatePosition = (payload: IPosition): IPosition => {
     throw new Error('applicationDate must be a valid date');
   }
 
-  if (!validator.isEmail(contactInfo.ContactEmail)) {
+  if (!validator.isEmail(contact.email)) {
     throw new Error('invalid email');
   }
 
-  return payload as IPosition;
+  return payload as Position;
 };
 
 //  export interface User {

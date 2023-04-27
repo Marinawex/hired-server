@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { Company } from '../models/positionsModel';
-import { refactoredCompanies } from '../models/companies';
+import { PositionModel } from '../models/positionsModel';
+import { positions } from '../models/positions';
 
 dotenv.config({ path: '../../.env' });
 
@@ -11,7 +11,7 @@ mongoose.connect(DB).then(() => console.log('DB connection successful!'));
 // IMPORT DATA INTO DB
 export const importData = async () => {
   try {
-    await Company.create(refactoredCompanies);
+    await PositionModel.create(positions);
     console.log('Data successfully loaded!');
   } catch (err) {
     console.log(err);
@@ -22,7 +22,7 @@ export const importData = async () => {
 // DELETE ALL DATA FROM DB
 export const deleteData = async () => {
   try {
-    await Company.deleteMany();
+    await PositionModel.deleteMany();
     console.log('Data successfully deleted!');
   } catch (err) {
     console.log(err);

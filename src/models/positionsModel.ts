@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 export interface Company {
   name: string;
   description?: string;
+  website?: string;
+  location?: string;
 }
 
 export type ApplicationStatus = 'inProcess' | 'applied' | 'followUp' | 'noReply' | 'rejected';
@@ -30,7 +32,7 @@ const positionSchema = new mongoose.Schema<Position>({
   requirements: {
     type: String,
     required: false,
-    default:'',
+    default: '',
   },
   company: {
     name: {
@@ -41,7 +43,17 @@ const positionSchema = new mongoose.Schema<Position>({
     description: {
       type: String,
       required: false,
-      default:'',
+      default: '',
+    },
+    website: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    location: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
   applicationDate: {
@@ -58,23 +70,23 @@ const positionSchema = new mongoose.Schema<Position>({
     name: {
       type: String,
       required: false,
-      default:'',
+      default: '',
     },
     email: {
       type: String,
       required: false,
-      default:'',
-      validate: {
-        validator: (value: string) => {
-          return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value);
-        },
-        message: 'Invalid email address',
-      },
+      default: '',
+      // validate: {
+      //   validator: (value: string) => {
+      //     return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value);
+      //   },
+      //   message: 'Invalid email address',
+      // },
     },
     phoneNumber: {
       type: String,
       required: false,
-      default:'',
+      default: '',
     },
   },
 });

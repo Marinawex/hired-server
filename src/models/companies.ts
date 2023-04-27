@@ -274,7 +274,7 @@ newCompanies.forEach((company) => {
 
 // }
 
-export const refactoredCompanies = [
+export const positions = [
   {
     applicationDate: '2023-03-18',
     status: {
