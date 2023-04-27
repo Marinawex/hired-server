@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { CompaniesService } from '../services/companiesService';
 // import { companies } from '../models/companies';
-import { Company } from '../models/companiesModel';
-import { validateCompany } from './companiesValidator';
+import { Position } from '../models/positionsModel';
+import { validatePosition } from './companiesValidator';
 
 export class CompaniesController {
-  private companiesService = new CompaniesService();
+  companiesService = new CompaniesService();
 
   constructor() {}
 
@@ -13,6 +13,7 @@ export class CompaniesController {
     try {
       //build query
       //1)filtering
+      
       const queryObj = { ...req.query };
       const excludedFields = ['page', 'sort', 'limit', 'fields'];
       excludedFields.forEach((field) => delete queryObj[field]);
@@ -21,7 +22,10 @@ export class CompaniesController {
       //2) advenced filtering
       let queryStr = JSON.stringify(queryObj);
       queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
-      let query = Company.find(JSON.parse(queryStr));
+      let query = Position.find(JSON.parse(queryStr));
+
+      // console.log(query);
+      
 
       // in the query string this will lock like  ?duration[gte]=5
 
@@ -41,12 +45,27 @@ export class CompaniesController {
       //exequte query
       const companies = await query;
 
+      // console.log(companies);
+      
+
+      // //  i want to refactor this function call place and dind here better place and implementation
+     const companiesWithDaysCounter =  companies.map((company) => {
+        return {
+          ...company,
+          //  find the way to make it work with companiesServise!!!
+        daysPassedSinceApplication:  7
+        };
+
+      }) 
+
+      console.log(companiesWithDaysCounter);
+
       //send response
       res.status(200).json({
         status: 'success',
-        results: companies.length,
+        results: companiesWithDaysCounter.length,
         data: {
-          companies,
+          companies:companiesWithDaysCounter,
         },
       });
     } catch (err) {
@@ -57,9 +76,15 @@ export class CompaniesController {
     }
   }
 
+  async getAllCompaniesByStatus(req: Request, res: Response) {
+    let statusaName = req.query
+    const companies = Position.find({})
+
+  }
+
   async getCompany(req: Request, res: Response) {
     try {
-      const company = await Company.findById(req.params.id);
+      const company = await Position.findById(req.params.id);
       res.status(200).json({
         status: 'success',
         data: {
@@ -75,17 +100,11 @@ export class CompaniesController {
   }
 
   async createCompany(req: Request, res: Response) {
-    const status = {
-      inProcess: false,
-      applied: true,
-      followUp: false,
-      noReply: false,
-      rejected: false,
-    };
+    const status = 'applied'
 
     try {
-      const validCompany = validateCompany(req.body);
-      const newCompany = await Company.create({ status, ...validCompany });
+      const validCompany = validatePosition(req.body);
+      const newCompany = await Position.create({ status, ...validCompany });
       console.log(req.body);
 
       res.status(201).json({
@@ -104,7 +123,7 @@ export class CompaniesController {
 
   async updateCompany(req: Request, res: Response) {
     try {
-      const company = await Company.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+      const company = await Position.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
       res.status(200).json({
         status: 'success',
         data: {
@@ -121,7 +140,7 @@ export class CompaniesController {
 
   async deleteCompany(req: Request, res: Response) {
     try {
-      await Company.findByIdAndDelete(req.params.id);
+      await Position.findByIdAndDelete(req.params.id);
       res.status(204).json({
         status: 'success',
         data: null,

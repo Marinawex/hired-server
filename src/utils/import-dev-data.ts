@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { Company } from '../models/companiesModel';
+import { Company } from '../models/positionsModel';
 import { refactoredCompanies } from '../models/companies';
 
 dotenv.config({ path: '../../.env' });

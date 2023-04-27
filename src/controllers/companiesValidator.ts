@@ -1,15 +1,15 @@
-import { ICompany } from 'models/companiesModel';
+import { IPosition } from 'models/positionsModel';
 import validator from 'validator';
 
-export const validateCompany = (payload: ICompany): ICompany => {
+export const validatePosition = (payload: IPosition): IPosition => {
   if (!payload) {
     throw new Error('the value is empty');
   }
 
-  const { companyName, position, applicationDate, contactInfo } = payload;
+  const { companyName, positionTitle, applicationDate, contactInfo } = payload;
 
   validator.escape(companyName).trim();
-  validator.escape(position).trim();
+  validator.escape(positionTitle).trim();
   validator.escape(contactInfo.ContactEmail).trim();
   validator.escape(contactInfo.ContactName).trim();
   validator.escape(contactInfo.ContactPhoneNumber).trim();
@@ -22,11 +22,11 @@ export const validateCompany = (payload: ICompany): ICompany => {
     throw new Error('company name must be a valid name');
   }
 
-  if (!validator.isAlpha(position)) {
+  if (!validator.isAlpha(positionTitle)) {
     throw new Error('invalid position');
   }
 
-  if (!validator.isLength(position, { min: 2, max: 40 })) {
+  if (!validator.isLength(positionTitle, { min: 2, max: 40 })) {
     throw new Error('position must be 2 to 40 chars length');
   }
 
@@ -38,7 +38,7 @@ export const validateCompany = (payload: ICompany): ICompany => {
     throw new Error('invalid email');
   }
 
-  return payload as ICompany;
+  return payload as IPosition;
 };
 
 //  export interface User {

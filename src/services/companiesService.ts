@@ -2,7 +2,7 @@ export class CompaniesService {
   constructor() {}
 
 
-  daysPassedSinceDate  (dateToCheck: number | string | Date) {
+   async daysPassedSinceDate  (dateToCheck:  string ) {
     const today = new Date().getTime();
     const oneDayInMs = 1000 * 60 * 60 * 24; // milliseconds in one day
     const dateInMs = new Date(dateToCheck).getTime();
@@ -21,3 +21,12 @@ export class CompaniesService {
 
   
 }
+
+
+const stringDate = '2023-03-17'
+
+const companiesService = new CompaniesService();
+
+const test = companiesService.daysPassedSinceDate(stringDate)
+
+console.log(test);
