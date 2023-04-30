@@ -97,7 +97,9 @@ export class PositionsController {
 
   async createPosition(req: Request, res: Response) {
     // const status = 'applied'
-
+    console.log(req.body);
+    
+   
     try {
       const validPosition = validatePosition(req.body);
       // the status is added automatically by the DB

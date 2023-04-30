@@ -18,7 +18,7 @@ export interface ContactInfo {
 export interface Position {
   title: string;
   requirements?: string;
-  company: Company;
+  company?: Company;
   applicationDate: string; // Format: YYYY-MM-DD
   status: ApplicationStatus;
   contact?: ContactInfo;
@@ -34,7 +34,7 @@ const positionSchema = new mongoose.Schema<Position>({
     required: false,
     default: '',
   },
-  company: {
+  company: { type:Object,
     name: {
       type: String,
       required: true,
@@ -67,6 +67,7 @@ const positionSchema = new mongoose.Schema<Position>({
     default: 'applied',
   },
   contact: {
+    type:Object,
     name: {
       type: String,
       required: false,
