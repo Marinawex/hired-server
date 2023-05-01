@@ -8,4 +8,6 @@ const positionsController = new PositionsController();
 
 router.route('/').get(positionsController.getAllPositions).post(positionsController.createPosition);
 
+router.route('/:status').get(positionsController.getAllPositionsByStatus)
+
 router.route('/:id').get(positionsController.getPosition).patch(positionsController.updatePosition).delete(positionsController.deletePosition);

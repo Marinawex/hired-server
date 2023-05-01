@@ -22,9 +22,9 @@ export const validatePosition = (payload: Position): Position => {
     throw new Error('company name must be a valid name');
   }
 
-  if (!validator.isAlpha(title)) {
-    throw new Error('invalid position');
-  }
+  // if (!validator.isAlpha(title)) {
+  //   throw new Error('invalid position');
+  // }
 
   if (!validator.isLength(title, { min: 2, max: 40 })) {
     throw new Error('position must be 2 to 40 chars length');

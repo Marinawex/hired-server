@@ -15,13 +15,13 @@ export class PositionsController {
       //1)filtering
 
       const queryObj = { ...req.query };
-      // const excludedFields = ['page', 'sort', 'limit', 'fields'];
-      // excludedFields.forEach((field) => delete queryObj[field]);
-      // console.log(req.query, queryObj);
+      const excludedFields = ['page', 'sort', 'limit', 'fields'];
+      excludedFields.forEach((field) => delete queryObj[field]);
+      console.log(req.query, queryObj);
 
       // //2) advenced filtering
       let queryStr = JSON.stringify(queryObj);
-      // queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+      queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
       let query = PositionModel.find(JSON.parse(queryStr));
 
       // console.log(query);
@@ -55,14 +55,12 @@ export class PositionsController {
         };
       });
 
-      console.log(positionsWithDaysCounter);
-
       //send response
       res.status(200).json({
         status: 'success',
-        results: positionsWithDaysCounter.length,
+        results: positions.length,
         data: {
-          positions: positionsWithDaysCounter,
+          positions: positions,
         },
       });
     } catch (err) {
@@ -74,8 +72,24 @@ export class PositionsController {
   }
 
   async getAllPositionsByStatus(req: Request, res: Response) {
-    let statusaName = req.query;
-    const positions = PositionModel.find({});
+    try {
+      const statusaName = req.params.status;
+      const positions = await PositionModel.find().where({status:statusaName});
+      res.status(200).json({
+        status: 'success',
+        results: positions.length,
+        data: {
+          positions,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      
+      res.status(404).json({
+        status: 'fail',
+        message: err,
+      });
+    }
   }
 
   async getPosition(req: Request, res: Response) {
@@ -98,13 +112,12 @@ export class PositionsController {
   async createPosition(req: Request, res: Response) {
     // const status = 'applied'
     console.log(req.body);
-    
-   
+
     try {
-      const validPosition = validatePosition(req.body);
+      // const validPosition = validatePosition(req.body);
       // the status is added automatically by the DB
       // const newPosition = await PositionModel.create({ status, ...validPosition });
-      const newPosition = await PositionModel.create(validPosition);
+      const newPosition = await PositionModel.create(req.body);
       console.log(req.body);
 
       res.status(201).json({
@@ -114,6 +127,8 @@ export class PositionsController {
         },
       });
     } catch (err) {
+      console.log(err);
+
       res.status(400).json({
         status: 'fail',
         message: err,
