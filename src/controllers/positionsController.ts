@@ -44,16 +44,16 @@ export class PositionsController {
       //exequte query
       const positions = await query;
 
-      // console.log(companies);
+     
 
       // //  i want to refactor this function call place and dind here better place and implementation
-      const positionsWithDaysCounter = positions.map((position) => {
-        return {
-          ...position,
-          //  find the way to make it work with companiesServise!!!
-          daysPassedSinceApplication: 7,
-        };
-      });
+      // const positionsWithDaysCounter = positions.map((position) => {
+      //   return {
+      //     ...position,
+      //     //  find the way to make it work with companiesServise!!!
+      //     daysPassedSinceApplication: 7,
+      //   };
+      // });
 
       //send response
       res.status(200).json({
@@ -137,7 +137,10 @@ export class PositionsController {
   }
 
   async updatePosition(req: Request, res: Response) {
+    console.log('ok');
+    
     try {
+      console.log(req.params.id, req.body);
       const position = await PositionModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
       res.status(200).json({
         status: 'success',
